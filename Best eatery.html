@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "UTF-8" />
+    <title> Best Eatery </title>
+
+    <style>
+        body {background-color: BlanchedAlmond; font-family: optima;
+                  color: MidnightBlue; text-align: center}
+        p { font-size: 30px}
+        button {font-size: 20px; background-color: coral}
+        input { font-size: 20px}
+     </style>
+  </head>
+  <body>
+    <script>
+
+    function setItemPrices(p){
+      for (var i = 0; i < p.length; i++){
+          var rand = Math.round(Math.random()*2001 + 500);
+          rand = rand/100;
+          p[i] = rand;
+     }
+    }
+
+    function getItemTotals(q, p,t){
+      for (var i = 0; i < q.length; i++){
+        t[i] = q[i] * p[i];
+      }
+    }
+
+    function getTotalBill(a){
+      var sum = 0;
+      for (var i = 0; i < a.length; i++){
+        sum += totals[i];
+      }
+      return sum;
+    }
+
+    function findLargestProfit(a){
+      largePos = 0;
+      large = a[0];
+      var i;
+      for (i = 0; i < a.length; i++){
+        if (a[i] > large){
+          large = a[i];
+          largePos = i;
+        }
+      }
+      return largePos;
+    }
+
+    function reset(){
+      total0.value = '';
+      total1.value = "";
+      total2.value = "";
+      total3.value = "";
+      total4.value = "";
+      profit.value = "";
+      sumTotal.value = "";
+
+    }
+
+    var names = new Array("Pizza","Burger","Salad","Pasta","Chicken");
+    var quantities = new Array(5);
+    for(var i = 0; i < quantities.length;i++){
+      quantities[i] = 0;
+    }
+    var prices = new Array(5);
+    var totals = new Array(5);
+
+    </script>
+
+    <h1> Best Eatery Order Summary </h1>
+    <table id = "myTable" border="1"; align= "center">
+    <tr>
+  	<th>  <button id = "name" onclick = '
+        name0.value = names[0];
+        name1.value = names[1];
+        name2.value = names[2];
+        name3.value = names[3];
+        name4.value = names[4];
+
+        '
+        >Food Item </button> </th>
+
+  	<th> Enter Number Ordered </th>
+
+  	<th><button id = "PriceEach" onclick = '
+        setItemPrices(prices);
+        price0.value =  "$" + prices[0].toFixed(2);
+        price1.value =  "$" + prices[1].toFixed(2);
+        price2.value =  "$" + prices[2].toFixed(2);
+        price3.value =  "$" + prices[3].toFixed(2);
+        price4.value =  "$" + prices[4].toFixed(2);
+        reset();
+      '>Price for each</button></th>
+
+  	<th><button id = "total" onclick = '
+        getItemTotals(quantities,prices,totals);
+        total0.value = "$" + totals[0].toFixed(2);
+        total1.value = "$" + totals[1].toFixed(2);
+        total2.value = "$" + totals[2].toFixed(2);
+        total3.value = "$" + totals[3].toFixed(2);
+        total4.value = "$" + totals[4].toFixed(2);
+        sumTotal.value = "$" + getTotalBill(totals).toFixed(2);
+        var position = findLargestProfit(totals);
+        profit.value = names[position];
+
+    ' >Item Total</button> </th>
+  	</tr>
+
+    <tr>
+      <td><input type="text" id="name0" size=10  style="background-color:cadetblue" value = '' onchange = ''></td>
+      <td><input type="text" id="quantity0" size=10 style = "text-align: center" value = '' onchange =
+        'quantities[0] = Number(quantity0.value)'></td>
+      <td><input type="text" id="price0" size=10 style="background-color:cadetblue"readonly></td>
+      <td><input type="text" id="total0" size=10 style="background-color:cadetblue" readonly></td>
+    </tr>
+    <tr>
+      <td><input type="text" id="name1" size=10 style="background-color:cadetblue" value = '' onchange = ''></td>
+      <td><input type="text" id="quantity1" size=10 style = "text-align: center" value = '' onchange =
+        'quantities[1]=Number(quantity1.value)'></td>
+      <td><input type="text" id="price1" size=10 style="background-color:cadetblue"readonly></td>
+      <td><input type="text" id="total1" size=10 style="background-color:cadetblue" readonly></td>
+    </tr>
+    <tr>
+      <td><input type="text" id="name2" size=10 style="background-color:cadetblue" value = '' onchange = ''></td>
+      <td><input type="text" id="quantity2" size=10 style = "text-align: center" value = '' onchange =
+        'quantities[2]=Number(quantity2.value)'></td>
+      <td><input type="text" id="price2" size=10 style="background-color:cadetblue" readonly></td>
+      <td><input type="text" id="total2" size=10 style="background-color:cadetblue" readonly></td>
+    </tr>
+    <tr>
+      <td><input type="text" id="name3" size=10 style="background-color:cadetblue" value = '' onchange = ''></td>
+      <td><input type="text" id="quantity3" size=10 style = "text-align: center" value = '' onchange =
+        'quantities[3]=Number(quantity3.value)'></td> 
+      <td><input type="text" id="price3" size=10 style="background-color:cadetblue" readonly></td>
+      <td><input type="text" id="total3" size=10 style="background-color:cadetblue" readonly></td>
+    </tr>
+    <tr>
+      <td><input type="text" id="name4" size=10 style="background-color:cadetblue" onchange=''></td>
+      <td><input type="text" id="quantity4" size=10 style = "text-align: center" value = '' onchange =
+        'quantities[4]=Number(quantity4.value)'></td>
+      <td><input type="text" id="price4" size=10 style="background-color:cadetblue" readonly></td>
+      <td><input type="text" id="total4" size=10 style="background-color:cadetblue" readonly></td>
+    </tr>
+  </table>
+    <p>
+      Total Amount Collected:
+      <input type = "text" id = "sumTotal" size = 10  = value = "" readonly />
+    </p>
+    <p>
+      Most Profitable Item:
+      <input type = "text" id = "profit" size = 10 value = "" readonly>
+    </p>
+  </body>
+</html>

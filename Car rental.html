@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <!-- Krishangi Goswami, TA Sec 5,6,34 -->
+    <title>Superfast Car Rental</title>
+    <style>
+      body {background-color: lightyellow; color: darkred}
+		</style>
+
+    <script>
+      var num_days;
+      var car_type = "";
+      var rental_price;
+      var lossDamage = 0;
+      var roadsideIssues = 0;
+      var optionalCharges = 0;
+      var salesTax;
+      var totalBill;
+
+      //declare array
+      var record = 0;
+
+      // Create arrays
+      var carsArray = new Array(10);
+      var daysArray = new Array(10);
+      var pricesArray = new Array(10);
+
+      // Functions definitions to initialize arrays
+
+      // Function to initialize a numeric array
+      function initNumArray(numArray){
+        for (i=0; i < numArray.length; i = i + 1){
+          numArray[i] = 0;
+        }
+      }
+
+      // Function to initialize a string array
+      function initTextArray(textArray){
+        for (i=0; i < textArray.length; i = i + 1){
+          textArray[i] = "";
+        }
+      }
+
+      // Initialize arrays
+      initTextArray(carsArray);
+      initNumArray(daysArray);
+      initNumArray(pricesArray);
+
+      function generateReport(carsArray, daysArray, pricesArray, totalCount){
+				// Generic function to add up elements of numeric array
+				function totalArray(xArray){
+					var total = 0;
+					for (i=0; i < xArray.length; i = i + 1){
+						total = total + xArray[i];
+					}
+					return total;
+				}
+				// Report headings
+				document.write('<h2>Summary Report</h2>');
+				document.write('<h3>Car Rentals </h3>');
+				//Get current date and time
+				var d = new Date();
+				document.write('Date: ' + d + '<br><hr>');
+				document.write('<table border="1">');
+				//Column headings
+				document.write('<tr>');
+				document.write('<th>Car Number</th>');
+				document.write('<th>Car Type</th>');
+				document.write('<th>Days</th>');
+				document.write('<th>Total Price</th>');
+				document.write('</tr>');
+				// Data rows
+				for (i=0; i < totalCount; i = i + 1){
+					document.write('<tr>');
+					document.write('<td>' + (i+1) + '</td>');
+					document.write('<td>' + carsArray[i] + '</td>');
+					document.write('<td>' + daysArray[i] + '</td>');
+					document.write('<td>$' + pricesArray[i].toFixed(2) + '</td>');
+					document.write('</tr>');
+				}
+				document.write('</table>');
+				document.write('<br>');
+				document.write('Total Revenue: $' + (totalArray(pricesArray)).toFixed(2));
+				document.write('<br>');
+				document.write('Average Revenue per Car: $' + (totalArray(pricesArray)/totalCount).toFixed(2));
+
+				return;
+			}
+    </script>
+  </head>
+
+  <body>
+    <h1>Superfast Car Rental</h1>
+ 		<h2>Rental Processing</h2>
+    <p>Enter the Number of Rental Days: <input type = "text" id = "rentaldays" value = ""
+      onchange = "num_days=Number(rentaldays.value);"/></p>
+      <p> Select Car Type:
+        <input type = "radio" name = "cartype" id = "compact"
+        onclick = "
+        car_type='Compact';
+        rental_price = 50 * num_days;
+        " /> Compact
+        <input type = "radio" name = "cartype" id = "economy"
+        onclick = "
+        car_type='Economy';
+        rental_price = 60 * num_days;
+        "/> Economy
+        <input type = "radio" name = "cartype" id = "intermediate"
+        onclick = "
+        car_type='Intermediate';
+        rental_price = 70 * num_days;
+        "/> Intermediate </p>
+
+    <p> Select Loss Damage Waiver:
+      <input type = "radio" name = "lossdamage" id = "LDyes"
+      onclick = "lossDamage = 25 * num_days;"/> Yes
+      <input type = "radio" name = "lossdamage" id = "LDno"
+      onclick = "lossDamage = 0;"/> No </p>
+
+    <p> Select Roadside Issues Coverage
+      <input type = "radio" name = "roadside" id = "RDyes"
+      onclick = "roadsideIssues= 9 * num_days;"/> Yes
+      <input type = "radio" name = "roadside" id = "RDno"
+      onclick = "roadsideIssues= 0;"/> No </p>
+
+    <p> <button onclick="
+      //rental Price
+      outputRentalPrice.value = rental_price;
+
+      //optional Items
+      optionalCharges = roadsideIssues + lossDamage;
+      outputOptional.value = optionalCharges;
+
+      //sales tax
+      salesTax = (rental_price + optionalCharges)*0.07;
+      outputSalesTax.value = salesTax.toFixed(2);
+
+      //total bill
+      totalBill = rental_price + optionalCharges + salesTax;
+      outputTotalBill.value = totalBill.toFixed(2);
+      ">Process</button></p>
+
+      <p>
+        <input type="button" id="addRecord" value= "Add Record" onclick="
+
+        carsArray[record]= car_type;
+        daysArray[record] = num_days;
+        pricesArray[record] = totalBill;
+
+        record = record + 1;
+        ">
+      </p>
+
+    <p>Car Rental Price: <input type = "text" id= "outputRentalPrice" readonly/></p>
+
+    <p>Optional Items: <input type = "text" id = "outputOptional" readonly/></p>
+
+    <p>Sales Tax: <input type = "text" id = "outputSalesTax" readonly/></p>
+
+    <p>Total Bill: <input type = "text" id = "outputTotalBill" readonly/></p>
+
+    <p> <button onclick='
+      carType = "";
+      num_days = 0;
+      lossDamage = 0;
+      roadsideIssues = 0;
+      rental_price = 0;
+      totalBill = 0;
+      salesTax = 0;
+      optionalCharges = 0;
+
+      outputRentalPrice.value = "";
+      outputOptional.value = "";
+      outputSalesTax.value = "";
+      outputTotalBill.value = "";
+      rentaldays.value = "";
+
+      compact.checked = false;
+      economy.checked = false;
+      intermediate.checked = false;
+      LDyes.checked = false;
+      LDno.checked = false;
+      RDyes.checked = false;
+      RDno.checked = false;
+
+      car_type="";
+
+      '>Clear</button></p>
+
+      <p>
+        <input type="button" id="report" value="Generate Report" onclick="
+        generateReport(carsArray,daysArray,pricesArray, record);
+        "/>
+      </p>
+
+
+  </body>
+</html>
